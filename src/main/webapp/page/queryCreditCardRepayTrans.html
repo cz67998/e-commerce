@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>电商管理台</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/queryCreditCardRepayTrans.js"></script>
+</head>
+<body>
+	<!-- 查询条件 -->
+	<div class="search" style="height: 6%">
+		<table>
+			<tr>
+				<td>业务流水号：</td>
+				<td>
+					<input id="busSeq" type="text" maxlength="32" style="width:200px; height:25px" class='text-box' placeholder='输入业务流水号'/>
+				</td>
+				<td>微众卡号：</td>
+				<td>
+					<input id="webankCardNo" type="text" maxlength="32" style="width:200px; height:25px" class="text-box" placeholder='输入Webank卡号'/>
+					<span class="required">*</span>
+				</td>
+				<td>交易日期:</td>
+				<td>
+					<input id="start_date" type="text" class="easyui-datebox" style='height:25px;width:200px'/> 至
+					<input id="end_date" type="text" class="easyui-datebox" style='height:25px;width:200px'/>
+				</td>
+				<td>
+					<span style='margin-left: 16px;'> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" id="search">查询</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:WB.WFTS.HandleRefund.searchReset();">重置</a>
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- 显示数据 -->
+	<div style="height: 90%; overflow: scroll;">
+		<div id="refund_show_data" class="easyui"></div>
+	</div>
+	
+	<!-- 数据表格明细 -->
+	<div id="addDialog" class="easyui-dialog"
+		style="width: 650px; height: 500px; padding: 10px 20px"
+		data-options="modal:true,buttons:'#addDialog_btn',title:'交易详情',closed:true">
+		<table>
+			<tr>
+				<td><span>业务名称：萨摩耶信用卡还款</span></td>
+			</tr>
+		</table>
+		<table id="upInfo">
+			<!-- 萨摩耶客户一类户转二类户 -->
+			<tr class="out">
+				<td colspan="2"><span style="color: red;">萨摩耶客户一类户转二类户（代扣）</span></td>
+			</tr>
+			<tr class="out">
+				<td class="detail"><span>业务流水号：</span></td>
+				<td><span id="out_bus_seq"></span></td>
+			</tr>
+			<tr class="out">
+				<td><span>子交易流水号：</span></td>
+				<td><span id="out_sys_seq"></span></td>
+			</tr>
+			<tr class="out">
+				<td><span>Webank卡号：</span></td>
+				<td><span id="out_webank_acct"></span></td>
+			</tr>
+			<tr class="out">
+				<td><span>姓名：</span></td>
+				<td><span id="out_webank_acct_name"></span></td>
+			</tr>
+			<tr class="out">
+				<td><span>交易金额：</span></td>
+				<td><span id="out_trans_amt"></span></td>
+			</tr>
+			<tr class="out">
+				<td><span>交易状态：</span></td>
+				<td><span id="out_deal_status"></span></td>
+			</tr>
+			<!-- 萨摩耶客户二类户转一类户 -->
+			<tr class="back">
+				<td colspan="2"><span style="color: red;">萨摩耶客户二类户转一类户（代扣回退）</span></td>
+			</tr>
+			<tr class="back">
+				<td><span>业务流水号：</span></td>
+				<td><span id="back_bus_seq"></span></td>
+			</tr>
+			<tr class="back">
+				<td><span>子交易流水号：</span></td>
+				<td><span id="back_sys_seq"></span></td>
+			</tr>
+			<tr class="back">
+				<td><span>Webank卡号：</span></td>
+				<td><span id="back_webank_acct"></span></td>
+			</tr>
+			<tr class="back">
+				<td><span>姓名：</span></td>
+				<td><span id="back_webank_acct_name"></span></td>
+			</tr>
+			<tr class="back">
+				<td><span>交易金额：</span></td>
+				<td><span id="back_trans_amt"></span></td>
+			</tr >
+			<tr class="back">
+				<td><span>交易状态：</span></td>
+				<td><span id="back_deal_status"></span></td>
+			</tr>
+			<!-- 萨摩耶营销专户转机构待清算户 -->
+			<tr class="market">
+				<td colspan="2"><span style="color: red;">萨摩耶营销专户转机构待清算户（营销账户扣款）</span></td>
+			</tr>
+			<tr class="market">
+				<td><span>业务流水号：</span></td>
+				<td><span id="market_bus_seq"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>子交易流水号：</span></td>
+				<td><span id="market_sys_seq"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>Webank卡号：</span></td>
+				<td><span id="market_webankCardNo"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>姓名：</span></td>
+				<td><span id="market_payerName"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>交易金额：</span></td>
+				<td><span id="market_total_amt"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>交易状态：</span></td>
+				<td><span id="market_deal_status"></span></td>
+			</tr>
+			<tr class="market">
+				<td><span>冲正状态：</span></td>
+				<td><span id="market_reversal_status"></span></td>
+			</tr>
+			<!-- 萨摩耶二类户转机构待清算户 -->
+			<tr class="two">
+				<td colspan="2"><span style="color: red;">萨摩耶二类户转机构待清算户（二类户扣款）</span></td>
+			</tr>
+			<tr class="two">
+				<td><span>业务流水号：</span></td>
+				<td><span id="two_bus_seq"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>子交易流水号：</span></td>
+				<td><span id="two_sys_seq"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>Webank卡号：</span></td>
+				<td><span id="two_webankCardNo"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>姓名：</span></td>
+				<td><span id="two_payerName"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>交易金额：</span></td>
+				<td><span id="two_total_amt"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>交易状态：</span></td>
+				<td><span id="two_deal_status"></span></td>
+			</tr>
+			<tr class="two">
+				<td><span>冲正状态：</span></td>
+				<td><span id="two_reversal_status"></span></td>
+			</tr>
+			<!-- 萨摩机构待清算户转客户信用卡 -->
+			<tr class="in">
+				<td colspan="2"><span style="color: red;">萨摩机构待清算户转客户信用卡（信用卡代付）</span></td>
+			</tr>
+			<tr class="in">
+				<td><span>业务流水号：</span></td>
+				<td><span id="in_bus_seq"></span></td>
+			</tr>
+			<tr class="in">
+				<td><span>子交易流水号：</span></td>
+				<td><span id="in_sys_seq"></span></td>
+			</tr>
+			<tr class="in">
+				<td><span>Webank卡号：</span></td>
+				<td><span id="in_webank_acct"></span></td>
+			</tr>
+			<tr class="in">
+				<td><span>姓名：</span></td>
+				<td><span id="in_webank_acct_name"></span></td>
+			</tr>
+			<tr class="in">
+				<td><span>交易金额：</span></td>
+				<td><span id="in_trans_amt"></span></td>
+			</tr>
+			<tr class="in">
+				<td><span>交易状态：</span></td>
+				<td><span id="in_deal_status"></span></td>
+			</tr>
+		</table>
+	</div>
+
+	<script type='text/javascript'
+		src='/wfts-adm/js/config.js?t=201412041728'></script>
+	<script type='text/javascript'
+		src='/wfts-adm/js/common.js?t=201502021046'></script>
+	<script type='text/javascript'
+		src='/wfts-adm/js/plugin.js?t=201503252026'></script>
+	<script type='text/javascript'
+		src='/wfts-adm/js/easyuiplugin.js?t=201503252026'></script>
+	<script type='text/javascript'
+		src='/wfts-adm/js/component/util.js?t=201503252026'></script>
+	<script type='text/javascript'
+		src='/wfts-adm/js/smy/queryCreditCardRepayTrans.js?t=201608092029'></script>
+</body>
+</html>

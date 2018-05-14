@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电商项目</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',title:'North Title',split:true" style="height:100px;">
+    <!--Form（表单）-->
+    <form id="ff" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input class="easyui-validatebox" type="text" name="name" data-options="required:true"/>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input class="easyui-validatebox" type="text" name="email" data-options="validType:'email'"/>
+        </div>
+    </form>
+    <!--ValidateBox（验证框）-->
+    <input id="vv" class="easyui-validatebox" data-options="required:true,validType:'email'"/>
+    <!--TextBox（文本框）-->
+    <input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px">
+    <!--PasswordBox（密码框）-->
+    <input class="easyui-passwordbox" prompt="Password" iconWidth="28" style="width:100%;height:34px;padding:10px">
+    <!--Combo（自定义下拉框）-->
+    <input id="cc" value="001">
+    <!--ComboBox（下拉列表框）-->
+    <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+        <option value="aa">aitem1</option>
+        <option>bitem2</option>
+        <option>bitem3</option>
+        <option>ditem4</option>
+        <option>eitem5</option>
+    </select>
+    <!--ComboTree（树形下拉框）-->
+    <select id="cc" class="easyui-combotree" style="width:200px;"
+            data-options="url:'get_data.php',required:true"></select>
+    <!--ComboGrid（数据表格下拉框）-->
+    <select id="cc" class="easyui-combogrid" name="dept" style="width:250px;"
+            data-options="
+            panelWidth:450,
+            value:'006',
+            idField:'code',
+            textField:'name',
+            url:'datagrid_data.json',
+            columns:[[
+                {field:'code',title:'Code',width:60},
+                {field:'name',title:'Name',width:100},
+                {field:'addr',title:'Address',width:120},
+                {field:'col4',title:'Col41',width:100}
+            ]]
+        "></select>
+    <!--ComboTreeGrid（树形表格下拉框）-->
+    <input class="easyui-combotreegrid"
+           data-options="        width:'100%',        panelWidth:500,        label:'Select Item:',        labelPosition:'top',        url:'treegrid_data1.json',        idField:'id',        treeField:'name',        columns:[[            {field:'name',title:'Name',width:200},            {field:'size',title:'Size',width:100},            {field:'date',title:'Date',width:100}        ]]">
+    <!--NumberBox（数值输入框）-->
+    <input type="text" class="easyui-numberbox" value="100" data-options="min:0,precision:2"></input>
+    <!--DateBox（日期输入框）-->
+    <input id="dd" type="text" class="easyui-datebox" required="required"> </input>
+    <!--DateTimeBox（日期时间输入框）-->
+    <input class="easyui-datetimebox" name="birthday"
+           data-options="required:true,showSeconds:false" value="3/4/2010 2:3" style="width:150px">
+    <!--DateTimeSpinner（日期时间微调框）-->
+    <input class="easyui-datetimespinner" style="width:300px">
+    <!--Calendar（日历）-->
+    <div id="cc" class="easyui-calendar" style="width:180px;height:180px;"></div>
+    <!--NumberSpinner（数字微调）-->
+    <input id="ss" class="easyui-numberspinner" style="width:80px;"
+           required="required" data-options="min:10,max:100,editable:false">
+    <!--TimeSpinner（时间微调）-->
+    <input id="ss" class="easyui-timespinner" style="width:80px;"
+           required="required" data-options="min:'08:30',showSeconds:true"/>
+    <!--Slider（滑动条）-->
+    <input class="easyui-slider" value="12" style="width:300px"
+           data-options="showTip:true,rule:[0,'|',25,'|',50,'|',75,'|',100]"/>
+    <!--FileBox（文件框）-->
+    <input class="easyui-filebox" style="width:300px">
+
+</div>
+
+<div data-options="region:'south',title:'South Title',split:true" style="height:100px;">
+
+</div>
+
+<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;">
+
+</div>
+
+<div data-options="region:'west',title:'West',split:true" style="width:100px;">
+    <ul id="tt" class="easyui-tree">
+        <li>
+            <span>Folder</span>
+            <ul>
+                <li>
+                    <span>Sub Folder 1</span>
+                    <ul>
+                        <li>
+                            <span><a href="#">File 11</a></span>
+                        </li>
+                        <li>
+                            <span>File 12</span>
+                        </li>
+                        <li>
+                            <span>File 13</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>File 2</span>
+                </li>
+                <li>
+                    <span>File 3</span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span>File21</span>
+        </li>
+    </ul>
+</div>
+
+<div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div>New</div>
+        <div>
+            <span>Open</span>
+            <div style="width:150px;">
+                <div><b>Word</b></div>
+                <div>Excel</div>
+                <div>PowerPoint</div>
+            </div>
+        </div>
+        <div data-options="iconCls:'icon-save'">Save</div>
+        <div class="menu-sep"></div>
+        <div>Exit</div>
+    </div>
+    <a href="javascript:void(0)" id="mb" class="easyui-menubutton"
+       data-options="menu:'#mn',iconCls:'icon-edit'">Edit</a>
+    <div id="mn" style="width:150px;">
+        <div data-options="iconCls:'icon-undo'">Undo</div>
+        <div data-options="iconCls:'icon-redo'">Redo</div>
+        <div class="menu-sep"></div>
+        <div>Cut</div>
+        <div>Copy</div>
+        <div>Paste</div>
+        <div class="menu-sep"></div>
+        <div data-options="iconCls:'icon-remove'">Delete</div>
+        <div>Select All</div>
+    </div>
+    <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">easyui</a>
+    <input class="easyui-switchbutton" checked>
+    <input class="easyui-switchbutton" data-options="onText:'Yes',offText:'No'">
+    <table class="easyui-datagrid">
+        <thead>
+        <tr>
+            <th data-options="field:'code'">编码</th>
+            <th data-options="field:'name'">名称</th>
+            <th data-options="field:'price'">价格</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>001</td>
+            <td>名称1</td>
+            <td>2323</td>
+        </tr>
+        <tr>
+            <td>002</td>
+            <td>名称2</td>
+            <td>4612</td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="easyui-datalist" title="DataList" style="width:400px;height:250px">
+        <li value="AL">Alabama</li>
+        <li value="AK">Alaska</li>
+        <li value="AZ">Arizona</li>
+        <li value="AR">Arkansas</li>
+        <li value="CA">California</li>
+        <li value="CO">Colorado</li>
+    </ul>
+    <table id="tt" class="easyui-treegrid" style="width:600px;height:400px"
+           data-options="url:'get_data.php',idField:'id',treeField:'name'">
+        <thead>
+        <tr>
+            <th data-options="field:'name',width:180">Task Name</th>
+            <th data-options="field:'persons',width:60,align:'right'">Persons</th>
+            <th data-options="field:'begin',width:80">Begin Date</th>
+            <th data-options="field:'end',width:80">End Date</th>
+        </tr>
+        </thead>
+    </table>
+    <table id="pg" class="easyui-propertygrid" style="width:300px"
+           data-options="url:'get_data.php',showGroup:true,scrollbarSize:0"></table>
+    <div id="dd" class="easyui-dialog" title="My Dialog" style="width:400px;height:200px;"
+         data-options="iconCls:'icon-save',resizable:true,modal:true">
+        Dialog Content.
+    </div>
+    <div id="win" class="easyui-window" title="My Window" style="width:600px;height:400px"
+         data-options="iconCls:'icon-save',modal:true">
+        Window Content
+    </div>
+    <div id="pp" class="easyui-pagination" data-options="total:2000,pageSize:10"
+         style="background:#efefef;border:1px solid #ccc;"></div>
+
+</div>
+</body>
+</html>
